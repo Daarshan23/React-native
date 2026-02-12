@@ -43,3 +43,8 @@ app-example
 # generated native folders
 /ios
 /android
+
+/API_KEYS
+.API_KEYS
+*.API_KEYS
+API_KEYS.*
