@@ -1,9 +1,11 @@
-import { View, Text } from 'react-native'
+import { View, Text, Image } from 'react-native'
 import React from 'react'
+import { images } from '@/constants/images'
 
 const search = () => {
   return (
-    <View>
+    <View className='flex-1 bg-primary'>
+      <Image source={images.bg}/>
       <Text></Text>
     </View>
   )

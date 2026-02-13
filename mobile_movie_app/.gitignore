@@ -48,3 +48,10 @@ app-example
 .API_KEYS
 *.API_KEYS
 API_KEYS.*
+
+/API_INFO
+.API_INFO
+*.API_INFO
+API_INFO.*
+
+
