@@ -24,18 +24,15 @@ const search = () => {
       }),
     false
   );
-
 useEffect(() =>{
-
   const timeoutId = setTimeout(async () => {
     if(searchQuery.trim()){
       await loadMovies();
-    
     }else{
       reset()
     }
-    return () => clearTimeout(timeoutId);
-  }, 900);
+  }, 700);
+  return () => clearTimeout(timeoutId);
 },[searchQuery])
 
 useEffect(()=>{
