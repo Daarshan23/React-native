@@ -70,8 +70,15 @@ const MoviesDetails = () => {
                     <MovieInfo label='Overview' value={movie?.overview} />
                     <MovieInfo label='Genre' value={movie?.genres?.map((g) => g.name).join(' - ') || 'N/A'} />
                     <View className='flex flex-row justify-between w-1/2'>
-                        <MovieInfo label='Budget' value={`$${movie?.budget / 1_000_000}million`} />
-                        <MovieInfo label='Revenue' value={`$${Math.round(movie?.revenue) / 1_000_000}`} />
+
+                        <MovieInfo
+                            label="Budget"
+                            value={`$${((movie?.budget ?? 0) / 1_000_000).toFixed(2)}M`}
+                        />
+                        <MovieInfo
+                            label="Revenue"
+                            value={`$${((movie?.revenue ?? 0) / 1_000_000).toFixed(2)}M`}
+                        />
                     </View>
 
                     <MovieInfo label='Production Companies' value={movie?.production_companies.map((c) => c.name).join(' - ') || 'NA'} />
@@ -79,7 +86,7 @@ const MoviesDetails = () => {
             </ScrollView>
             <TouchableOpacity className='absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 flex flex-row items-center justify-center z-50' onPress={router.back}>
                 <Image source={icons.arrow} className='size-5 mr-1
-                mt-0.5 rotate-180' tintColor={'#fff'}/>
+                mt-0.5 rotate-180' tintColor={'#fff'} />
                 <Text className='text-white font-semibold text-base'>
                     Go Back
                 </Text>
