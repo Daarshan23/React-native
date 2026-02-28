@@ -30,7 +30,7 @@ const signIn = () => {
               <Image source={icons.google} className='w-5 h-5' resizeMode='contain' />
               <Text className='text-lg font-rubik-medium text-black-300 ml-2'>Continue with google</Text>
             </View>
-              
+
 
           </TouchableOpacity>
         </View>
