@@ -13,6 +13,7 @@ const TabIcon = ({ focused, icon, title }: { focused: boolean; icon: any; title:
     </View>
 )
 
+
 const TabsLayout = () => {
     return (
         <Tabs
