@@ -1,6 +1,6 @@
 import { Link } from "expo-router";
 import { Text, View } from "react-native";
-import signIn from "../signIn";
+import signIn from "../../signIn";
 import explore from "./explore";
 import profile from "./profile";
 
