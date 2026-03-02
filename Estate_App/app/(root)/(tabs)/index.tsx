@@ -14,10 +14,7 @@ export default function Index() {
       }}
     >
       <Text className="font-bold my-10 font-rubik text-3xl">Welcome to Restate App</Text>
-      <Link href="/signIn">Sign In</Link>
-      <Link href="/explore">Explore</Link>
-      <Link href="/profile">Profile</Link>
-      <Link href="/properties/1">Property</Link>
+    
     </View>
   );
 }
