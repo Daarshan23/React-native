@@ -26,14 +26,27 @@ export default function Index() {
         <Search />
         <View className="my-5">
           <View className="flex flex-row items-center justify-between">
-            <Text className="text-xl text-black-300">Featured</Text>
+            <Text className="text-xl text-black-300 font-bold">Featured</Text>
             <TouchableOpacity>
               <Text className="text-base font-bold text-primary-300">Sell All</Text>
             </TouchableOpacity>
           </View>
+          <View className="flex flex-row gap-5 mt-5">
+          <FeaturedCard/>
+          <FeaturedCard/>
+          <FeaturedCard/>
+          </View>
         </View>
-      <FeaturedCard/>
-      <Card/>
+        <View className="flex flex-row items-center justify-between">
+            <Text className="text-xl text-black-300 font-bold">Our Recommendation</Text>
+            <TouchableOpacity>
+              <Text className="text-base font-bold text-primary-300">Sell All</Text>
+            </TouchableOpacity>
+          </View>
+          <View className="flex flex-row gap-5 mt-5">
+            <Card/>
+            <Card/>
+          </View>
       </View>
     </SafeAreaView>
   );
