@@ -1,13 +1,12 @@
-import { Link } from "expo-router";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import signIn from "../../Auth/signIn";
-import explore from "./explore";
-import profile from "./profile";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 import Search from "@/components/Search";
 import { Card, FeaturedCard } from "@/components/Cards";
+import Filters from "@/components/Filters";
+
+
 
 export default function Index() {
   return (
@@ -40,9 +39,10 @@ export default function Index() {
         <View className="flex flex-row items-center justify-between">
             <Text className="text-xl text-black-300 font-bold">Our Recommendation</Text>
             <TouchableOpacity>
-              <Text className="text-base font-bold text-primary-300">Sell All</Text>
+              <Text className="text-base font-bold text-primary-300">See All</Text>
             </TouchableOpacity>
           </View>
+          <Filters/>
           <View className="flex flex-row gap-5 mt-5">
             <Card/>
             <Card/>
