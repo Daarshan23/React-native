@@ -5,10 +5,15 @@ import icons from "@/constants/icons";
 import Search from "@/components/Search";
 import { Card, FeaturedCard } from "@/components/Cards";
 import Filters from "@/components/Filters";
+import { useGlobalContext } from "@/lib/globalProvider";
+import { avatar } from '../../../lib/appwrite';
 
 
 
 export default function Index() {
+
+  const {user} = useGlobalContext();
+
   return (
     <SafeAreaView className="bg-white h-full">
       <FlatList
@@ -22,10 +27,11 @@ export default function Index() {
         ListHeaderComponent={<View className="px-5">
           <View className="flex flex-row items-center justify-between mt-5">
             <View className="flex flex-row items-center">
-              <Image source={images.avatar} className="size-12 rounded-full" />
+              <Image source={{uri: user?.avatar}} 
+              className="size-12 rounded-full" />
               <View className="flex flex-col items-start ml-2 justify-center">
                 <Text className="text-xs font-rubik text-black-100">Good Morning </Text>
-                <Text className="text-base font-rubik-medium text-black-300">Darshan</Text>
+                <Text className="text-base font-rubik-medium text-black-300">{user?.name}</Text>
               </View>
             </View>
             <Image source={icons.bell} className="size-6" />
@@ -39,7 +45,15 @@ export default function Index() {
               </TouchableOpacity>
             </View>
 
-            
+            <FlatList
+            data={[1,2,3]}
+            renderItem={({item}) => <FeaturedCard/>}
+            keyExtractor={(item) => item.toString()}
+            horizontal
+            bounces={false}
+            showsHorizontalScrollIndicator={false}
+            contentContainerClassName="flex gap-5 mt-5"
+            />
           </View>
           <View className="flex flex-row items-center justify-between">
             <Text className="text-xl text-black-300 font-bold">Our Recommendation</Text>
