@@ -1,3 +1,4 @@
+import { gallery } from '@/constants/data';
 import { Account, Avatars, Client, OAuthProvider } from 'appwrite';
 import *as Linking from 'expo-linking';
 import * as WebBrowser from "expo-web-browser";
@@ -7,6 +8,12 @@ export const config = {
     platform: "com.djcodes.restate",
     endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
     projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
+    databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID,
+    galleryCollectionId: process.env.EXPO_PUBLIC_APPWRITE_GALLERY_COLLECTION_ID,
+    reviewCollectionId: process.env.EXPO_PUBLIC_APPWRITE_REVIEW_COLLECTION_ID,
+    agentsCollectionId: process.env.EXPO_PUBLIC_APPWRITE_AGENTS_COLLECTION_ID,
+    propertiesCollectionId: process.env.EXPO_PUBLIC_APPWRITE_PROPERTIES_COLLECTION_ID,
+
 }
 
 export const client = new Client();
