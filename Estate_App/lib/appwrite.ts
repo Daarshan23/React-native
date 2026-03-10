@@ -1,53 +1,60 @@
 import { gallery } from '@/constants/data';
-import { Account, Avatars, Client, OAuthProvider } from 'appwrite';
-import *as Linking from 'expo-linking';
-import * as WebBrowser from "expo-web-browser";
-
+import {
+    Account,
+    Avatars,
+    Client,
+    Databases,
+    OAuthProvider,
+    Query,
+} from 'react-native-appwrite';
+import * as Linking from 'expo-linking';
+import * as WebBrowser from 'expo-web-browser';
 
 export const config = {
-    platform: "com.djcodes.restate",
+    platform: 'com.djcodes.restate',
     endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
     projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
     databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID,
-    galleryCollectionId: process.env.EXPO_PUBLIC_APPWRITE_GALLERY_COLLECTION_ID,
-    reviewCollectionId: process.env.EXPO_PUBLIC_APPWRITE_REVIEW_COLLECTION_ID,
+    galleriesCollectionId:
+        process.env.EXPO_PUBLIC_APPWRITE_GALLERY_COLLECTION_ID,
+    reviewsCollectionId: process.env.EXPO_PUBLIC_APPWRITE_REVIEW_COLLECTION_ID,
     agentsCollectionId: process.env.EXPO_PUBLIC_APPWRITE_AGENTS_COLLECTION_ID,
-    propertiesCollectionId: process.env.EXPO_PUBLIC_APPWRITE_PROPERTIES_COLLECTION_ID,
-
-}
+    propertiesCollectionId:
+        process.env.EXPO_PUBLIC_APPWRITE_PROPERTIES_COLLECTION_ID,
+};
 
 export const client = new Client();
 
-client
-    .setEndpoint(config.endpoint!)
-    .setProject(config.projectId!)
-    
+client.setEndpoint(config.endpoint!).setProject(config.projectId!);
 
 export const avatar = new Avatars(client);
 export const account = new Account(client);
-
+export const databases = new Databases(client);
 
 export async function login() {
     try {
         const redirectUrl = Linking.createURL('/');
 
-        const response = await account.createOAuth2Token(OAuthProvider.Google, redirectUrl);
+        const response = await account.createOAuth2Token(
+            OAuthProvider.Google,
+            redirectUrl,
+        );
 
-        if (!response) throw new Error('Failed to login')
+        if (!response) throw new Error('Failed to login');
 
         const browserResult = await WebBrowser.openAuthSessionAsync(
             response.toString(),
-            redirectUrl
-        )
+            redirectUrl,
+        );
 
         if (browserResult.type !== 'success') {
-            throw new Error('Failed to login')
+            throw new Error('Failed to login');
         }
         const url = new URL(browserResult.url);
         const secret = url.searchParams.get('secret')?.toString();
         const userId = url.searchParams.get('userId')?.toString();
 
-        if (!secret || !userId) throw new Error('Failed to login')
+        if (!secret || !userId) throw new Error('Failed to login');
 
         const session = await account.createSession(userId, secret);
 
@@ -59,30 +66,42 @@ export async function login() {
     }
 }
 
-export async function logout(){
+export async function logout() {
     try {
-        await account.deleteSession('current')
-    return true;
+        await account.deleteSession('current');
+        return true;
     } catch (error) {
-        console.log(error)
-        return false
+        console.log(error);
+        return false;
     }
 }
 
-export async function getCurrentUser(){
+export async function getCurrentUser() {
     try {
         const response = await account.get();
 
-        if(response.$id){
+        if (response.$id) {
             const userAvatar = avatar.getInitials(response.name);
             return {
-            ...response,
-            avatar: userAvatar.toString(),
+                ...response,
+                avatar: userAvatar.toString(),
+            };
         }
-        }
-        
     } catch (error) {
-        console.log(error)
+        console.log(error);
         return null;
+    }
+}
+export async function getLatestProperties() {
+    try {
+        const result = await databases.listDocuments(
+            config.databaseId!,
+            config.propertiesCollectionId!,
+            [Query.orderAsc('$createdAt'), Query.limit(5)],
+        );
+        return result.documents;
+    } catch (error) {
+        console.log(error);
+        return [];
     }
 }
