@@ -12,7 +12,7 @@ const Filters = () => {
 
   const handleCategoryPress = (category: string) => {
     if(SelectedCategory === category){
-      setSelectedCategory:('All');
+      setSelectedCategory('All');
       router.setParams({filter:'All'});
       return;
     }
