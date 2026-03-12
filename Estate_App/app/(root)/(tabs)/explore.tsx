@@ -23,10 +23,10 @@ import { useEffect } from 'react';
 import NoResults from '@/components/NoResults';
 
 export default function explore() {
-   
+
     const params = useLocalSearchParams<{ query?: string; filter?: string }>();
 
-   
+
 
     const { data: properties, loading, refetch } = useAppwrite({
         fn: getProperties,
@@ -67,16 +67,21 @@ export default function explore() {
                 }
                 ListHeaderComponent={
                     <View className='px-5'>
-                      <View>
+                        <View>
+
+                    <View>
                         
-                      </View>
-                      <Search/>
-                      <View className='mt-5'>
-                        <Filters/>
-                        <Text className='text-xl font-bold text-black-300 mt-5'>
-                          Found {properties?.length} Properties
-                        </Text>
-                      </View>
+                    </View>
+
+                        </View>
+
+                        <Search />
+                        <View className='mt-5'>
+                            <Filters />
+                            <Text className='text-xl font-bold text-black-300 mt-5'>
+                                Found {properties?.length} Properties
+                            </Text>
+                        </View>
                     </View>
                 }
             />
