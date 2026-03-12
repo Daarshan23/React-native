@@ -1,4 +1,5 @@
 import {
+    ActivityIndicator,
     Button,
     FlatList,
     Image,
@@ -19,21 +20,22 @@ import { router, useLocalSearchParams } from 'expo-router';
 // import filter from '@/assets/icons/filter.png';
 import { useAppwrite } from '@/lib/useAppwrite';
 import { useEffect } from 'react';
+import NoResults from '@/components/NoResults';
 
 export default function Index() {
     const { user } = useGlobalContext();
-    const params = useLocalSearchParams<{query?: string; filter?:string}>();
+    const params = useLocalSearchParams<{ query?: string; filter?: string }>();
 
-    const { data: latestProperties , loading: latestPropertiesLoading} = useAppwrite({
+    const { data: latestProperties, loading: latestPropertiesLoading } = useAppwrite({
         fn: getLatestProperties
     })
 
-    const {data: properties , loading , refetch} = useAppwrite({
+    const { data: properties, loading, refetch } = useAppwrite({
         fn: getProperties,
-        params:{
+        params: {
             filter: params.filter!,
             query: params.query!,
-            limit:6,
+            limit: 6,
         },
         skip: true,
     })
@@ -54,12 +56,17 @@ export default function Index() {
             {/* <Button title="Seed" onPress={seed} /> */}
             <FlatList
                 data={properties}
-                renderItem={({ item }) => (<Card item={item} onPress={() => handleCardPress(item.$id)}/>)}
+                renderItem={({ item }) => (<Card item={item} onPress={() => handleCardPress(item.$id)} />)}
                 keyExtractor={(item) => item.$id}
                 numColumns={2}
                 contentContainerClassName="pb-32"
                 columnWrapperClassName="flex gap-5 px-5"
                 showsVerticalScrollIndicator={false}
+                ListEmptyComponent={
+                    loading ? (
+                        <ActivityIndicator size='large' className='text-primary-300' />
+                    ) : <NoResults />
+                }
                 ListHeaderComponent={
                     <View className="px-5">
                         <View className="flex flex-row items-center justify-between mt-5">
@@ -92,15 +99,17 @@ export default function Index() {
                                 </TouchableOpacity>
                             </View>
 
-                            <FlatList
-                                data={latestProperties}
-                                renderItem={({ item }) => (<FeaturedCard item={item} onPress={() => handleCardPress(item.$id)} />)}
-                                keyExtractor={(item) => item.$id}
-                                horizontal
-                                bounces={false}
-                                showsHorizontalScrollIndicator={false}
-                                contentContainerClassName="flex gap-5 mt-5"
-                            />
+                            {latestPropertiesLoading ? (<ActivityIndicator size='large' />) : !latestProperties || latestProperties.length === 0 ? (<NoResults />) : (
+
+                                <FlatList
+                                    data={latestProperties}
+                                    renderItem={({ item }) => (<FeaturedCard item={item} onPress={() => handleCardPress(item.$id)} />)}
+                                    keyExtractor={(item) => item.$id}
+                                    horizontal
+                                    bounces={false}
+                                    showsHorizontalScrollIndicator={false}
+                                    contentContainerClassName="flex gap-5 mt-5"
+                                />)}
                         </View>
                         <View className="flex flex-row items-center justify-between">
                             <Text className="text-xl text-black-300 font-bold">
