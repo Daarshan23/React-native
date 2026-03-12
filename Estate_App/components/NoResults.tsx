@@ -10,6 +10,7 @@ const NoResults = () => {
             <Text className='text-base text-black-100 mt-2'>
                 We could not find any results
             </Text>
+            
         </View>
     )
 }
